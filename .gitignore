@@ -1,5 +1,5 @@
 # configuration files
-system_config.yml
+configs/system_config.yml
 
 # assignment file
 Assignment.md
