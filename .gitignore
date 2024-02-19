@@ -1,5 +1,7 @@
 # configuration files
-configs/system_config.yml
+system_config.yml
 
 # assignment file
 Assignment.md
+
+__pycache__/
