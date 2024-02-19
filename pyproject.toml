@@ -3,13 +3,13 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = ""
+name = "DSI BRS Assignment"
 authors = [
-    {name = "", email = ""},
+    {name = "Stephen Petersen", email = "petersen.stephen@me.com"},
 ]
 description = ""
 version = "0.1.0"
-dependencies = [""]
+dependencies = ["requests", "yaml", "matplotlib.pyplot"]
 requires-python = ">=3.11.0"
 readme = "README.md"
 classifiers = [
