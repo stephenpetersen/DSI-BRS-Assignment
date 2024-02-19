@@ -3,5 +3,5 @@ plot_color: white
 plot_title: Breakdown of Liked Songs by Genre
 x_axis_title: Genre
 y_axis_title: Number of Liked Songs
-figure_size: [8.27, 11.69]
+figure_size: [8, 11]
 default_save_path: C:/Desktop
