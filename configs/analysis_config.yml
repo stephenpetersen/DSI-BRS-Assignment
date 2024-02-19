@@ -1,7 +1,5 @@
 ntfy.sh_topic: https://ntfy.sh/stephens_brs_notifier
 
-data_url: ADD_URL_TO_DATA
-
 default_save_path: figures/
 
 plot_config:

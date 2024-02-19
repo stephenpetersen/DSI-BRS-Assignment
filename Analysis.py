@@ -2,7 +2,7 @@ from typing import Any, Optional
 import matplotlib.pyplot as plt
 import yaml
 import requests
-
+import pandas as pd
 
 class Analysis():
 
@@ -23,17 +23,6 @@ Returns
 analysis_obj : Analysis
     Analysis object containing consolidated parameters from the configuration files
 
-Notes
------
-The configuration files should include parameters for:
-    * GitHub API token
-    * ntfy.sh topic
-    * Plot color
-    * Plot title
-    * Plot x and y axis titles
-    * Figure size
-    * Default save path
-
 '''
         CONFIG_PATHS = ['configs/system_config.yml', 'configs/user_config.yml']
 
@@ -52,9 +41,9 @@ The configuration files should include parameters for:
         self.config = config
 
     def load_data(self) -> None:
-        ''' Retrieve data from the GitHub API
+        ''' Retrieve data from the NYT Best Sellers API
 
-This function makes an HTTPS request to the GitHub API and retrieves your selected data. The data is
+This function makes an HTTPS request to the NYT Best Sellers API and retrieves your Authors and Booktitles. The data is
 stored in the Analysis object.
 
 Parameters
@@ -66,9 +55,35 @@ Returns
 None
 
 '''
+        # Load system configuration
+        with open('configs/system_config.yml', 'r') as f:
+            system_config = yaml.safe_load(f)
 
-        data = requests.get('/url/to/data').json()
-        self.dataset = data
+        # Access NYT API key from the system configuration
+        key = system_config.get('nyt_key')
+
+        # URL for the best-sellers list endpoint
+        
+        url = f'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key={key}'
+
+        # GET data from NYT API
+        response = requests.get(url)
+
+        # Check if the request was successful
+        if response.status_code == 200:
+            # Parse the JSON response, convert to dataframe
+            data = response.json()
+
+            # Extract relevant information from the response
+            books = data['results']['books']
+            
+            # Print the titles of the top 15 books
+            for i, book in enumerate(books, 1):
+                print(f"{i}. {book['title']} by {book['author']}")  # Print the book title and authors properly
+        else:
+            print("Error fetching data from the API")
+
+        self.df = pd.DataFrame(books)
 
     def compute_analysis(self) -> Any:
         '''Analyze previously-loaded data.
@@ -85,7 +100,9 @@ Returns
 analysis_output : Any
 
 '''
-        return self.dataset.mean() 
+        # Calculate something       
+
+        pass
 
     def plot_data(self, save_path: Optional[str] = None) -> plt.Figure:
         ''' Analyze and plot data
@@ -103,7 +120,14 @@ Returns
 fig : matplotlib.Figure
 
 '''
-        pass
+        # Add plot code here
+
+        fig = plt.figure()
+        if save_path:
+            plt.savefig(f'{save_path}fig.png')
+        else:
+            plt.savefig('figures/fig.png')
+        return fig
 
     def notify_done(self, message: str) -> None:
         ''' Notify the user that analysis is complete.
