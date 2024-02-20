@@ -47,7 +47,7 @@ The program generates a bar plot to visualize the analysis results. It displays 
 
 ### Notification
 
-Upon completion of the analysis, the program sends a notification to the user through the ntfy.sh webpush service. The notification includes details about the completion time and prompts the user to check the analysis results and generated figure.
+Upon completion of the analysis, the program sends a notification to the ntfy.sh webpush service. The notification includes details about the completion time and prompts the user to check the analysis results and generated figure.
 
 ## Requirements
 
