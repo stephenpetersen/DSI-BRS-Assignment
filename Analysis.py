@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import yaml
 import requests
 import pandas as pd
+import datetime as dt
+import time
 
 class Analysis():
 
@@ -62,34 +64,45 @@ None
         # Access NYT API key from the system configuration
         key = system_config.get('nyt_key')
 
-        # URL for the best-sellers list endpoint
-        
-        url = f'https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key={key}'
+        # loop dates
+        current_date = dt.date.today()
+        loop_date = current_date - dt.timedelta(weeks=8) # gets us 2 months of weekly books lists
+        one_week = dt.timedelta(weeks=1)
 
-        # GET data from NYT API
-        response = requests.get(url)
+        self.books = []
 
-        # Check if the request was successful
-        if response.status_code == 200:
-            # Parse the JSON response, convert to dataframe
+        while loop_date <= current_date:
+            print(loop_date)
+            # URL for the best-sellers list endpoint
+            url = f'https://api.nytimes.com/svc/books/v3/lists/{loop_date}/hardcover-fiction.json?api-key={key}'
+
+            # GET data from NYT API
+            response = requests.get(url)
+
+            # check if the request was successful
+            if response.status_code == 200:
+                print('Data fetched successfully data from the API')
+            else:
+                print('Error fetching data from the API')
+
+            # parse the JSON response
             data = response.json()
 
-            # Extract relevant information from the response
-            books = data['results']['books']
-            
-            # Print the titles of the top 15 books
-            for i, book in enumerate(books, 1):
-                print(f"{i}. {book['title']} by {book['author']}")  # Print the book title and authors properly
-        else:
-            print("Error fetching data from the API")
+            # append from loop
+            self.books.extend(data['results']['books'])
 
-        self.df = pd.DataFrame(books)
+            # increment week
+            loop_date += one_week
+            
+            # Pause for 12 seconds (apparently NYT titrates API calls)
+            time.sleep(12)
+
+        self.df = pd.DataFrame(self.books)
 
     def compute_analysis(self) -> Any:
-        '''Analyze previously-loaded data.
+        '''Provides and average for weeks on NYT Best Sellers list, by rank.
 
-This function runs an analytical measure of your choice (mean, median, linear regression, etc...)
-and returns the data in a format of your choice.
+This function uses group by from the pandas library to compute mean 'weeks on list' by the rank of the book on the list and returns the result as a matrix.
 
 Parameters
 ----------
