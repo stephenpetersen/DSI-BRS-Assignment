@@ -1,4 +1,4 @@
-ntfy.sh_topic: https://ntfy.sh/stephens_brs_notifier
+ntfy_topic: https://ntfy.sh/stephens_brs_notifier
 
 default_save_path: figures/
 

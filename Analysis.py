@@ -151,36 +151,38 @@ class Analysis():
         fig_size = self.config['plot_config']['fig_size']
 
         # Plot
-        plt.figure(figsize=fig_size)
+        fig = plt.figure(figsize=fig_size)
         plt.bar(mean_weeks_on_list.index, mean_weeks_on_list.values, color=color)
         plt.title(title)
         plt.xlabel(xtitle)
         plt.ylabel(ytitle)
         plt.xticks(mean_weeks_on_list.index)  # Axis labels for each category
         plt.grid(False)  # No grid lines
-        plt.show()
 
-        fig = plt.figure(figsize=(10, 6))
         if save_path:
             plt.savefig(f'{save_path}fig.png')
         else:
             plt.savefig('figures/fig.png')
+
+        plt.show()
+
         return fig
 
-    def notify_done(self, message: str) -> None:
+    def notify_done(self) -> None:
         ''' Notify the user that analysis is complete.
 
-Send a notification to the user through the ntfy.sh webpush service.
+        Send a notification to the user through the ntfy.sh webpush service.
 
-Parameters
-----------
-message : str
-  Text of the notification to send
+        Parameters
+        ----------
+        message : str
+            Text of the notification to send
 
-Returns
--------
-None
-
-'''
-        pass
+        Returns
+        -------
+        None
+        '''
+        datetime = dt.datetime.now()
+        requests.post(self.config['ntfy_topic'],
+            data=f'**NYT Book API Assignment** 🔥 \nAnalysis completed at {datetime}. Check results and figure!'.encode(encoding='utf-8'))
     
