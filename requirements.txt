@@ -1,7 +1,4 @@
-typing
-matplotlib.pyplot
-yaml
+matplotlib
+pyyaml
 requests
 pandas
-datetime
-time
