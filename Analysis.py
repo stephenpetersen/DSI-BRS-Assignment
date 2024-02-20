@@ -141,7 +141,31 @@ class Analysis():
         fig : matplotlib.Figure
 
         '''
+        mean_weeks_on_list = self.compute_analysis()
 
+        # Plot configuration
+        color = self.config['plot_config']['color']
+        title = self.config['plot_config']['title']
+        xtitle = self.config['plot_config']['xtitle']
+        ytitle = self.config['plot_config']['ytitle']
+        fig_size = self.config['plot_config']['fig_size']
+
+        # Plot
+        plt.figure(figsize=fig_size)
+        plt.bar(mean_weeks_on_list.index, mean_weeks_on_list.values, color=color)
+        plt.title(title)
+        plt.xlabel(xtitle)
+        plt.ylabel(ytitle)
+        plt.xticks(mean_weeks_on_list.index)  # Axis labels for each category
+        plt.grid(False)  # No grid lines
+        plt.show()
+
+        fig = plt.figure(figsize=(10, 6))
+        if save_path:
+            plt.savefig(f'{save_path}fig.png')
+        else:
+            plt.savefig('figures/fig.png')
+        return fig
 
     def notify_done(self, message: str) -> None:
         ''' Notify the user that analysis is complete.

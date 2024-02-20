@@ -3,8 +3,8 @@ ntfy.sh_topic: https://ntfy.sh/stephens_brs_notifier
 default_save_path: figures/
 
 plot_config:
-  color: PLOT_COLOR
-  title: PLOT_TITLE
-  xtitle: X_AXIS_TITLE
-  ytitle: Y_AXIS_TITLE
-  fig_size: FIGURE_SIZE
+  color: lightseagreen
+  title: "Average Weeks on Bestseller List by Rank \n Most Recent 8 Lists (2 months)"
+  xtitle: "Rank"
+  ytitle: "Average Weeks on Bestseller List"
+  fig_size: [10, 6]
