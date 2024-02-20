@@ -9,23 +9,22 @@ import time
 class Analysis():
 
     def __init__(self, analysis_config: str) -> None:
-
         ''' Load config into an Analysis object
 
-Load system-wide configuration from `configs/system_config.yml`, user configuration from
-`configs/user_config.yml`, and the specified analysis configuration file
+        Load system-wide configuration from `configs/system_config.yml`, user configuration from
+        `configs/user_config.yml`, and the specified analysis configuration file
 
-Parameters
-----------
-analysis_config : str
-    Path to the analysis/job-specific configuration file
+        Parameters
+        ----------
+        analysis_config : str
+            Path to the analysis/job-specific configuration file
 
-Returns
--------
-analysis_obj : Analysis
-    Analysis object containing consolidated parameters from the configuration files
+        Returns
+        -------
+        analysis_obj : Analysis
+            Analysis object containing consolidated parameters from the configuration files
 
-'''
+        '''
         CONFIG_PATHS = ['configs/system_config.yml', 'configs/user_config.yml']
 
         # add the analysis config to the list of paths to load
@@ -45,22 +44,25 @@ analysis_obj : Analysis
     def load_data(self) -> None:
         ''' Retrieve data from the NYT Best Sellers API
 
-This function makes an HTTPS request to the NYT Best Sellers API and retrieves your Authors and Booktitles. The data is
-stored in the Analysis object.
+        This function makes a series of HTTPS request to the NYT Best Sellers API and retrieves data on authors,
+        book titles, NYT best seller rank, weeks on list, etc. The fuction loops over the last 8 weeks to retrieve
+        about 120 records (15 per week, times 8 weeks). The data is stored in the Analysis object.
 
-Parameters
-----------
-None
+        Parameters
+        ----------
+        None
 
-Returns
--------
-None
+        Returns
+        -------
+        None
 
-'''
+        '''
+        
         # Load system configuration
         with open('configs/system_config.yml', 'r') as f:
             system_config = yaml.safe_load(f)
 
+        """
         # Access NYT API key from the system configuration
         key = system_config.get('nyt_key')
 
@@ -96,51 +98,50 @@ None
             
             # Pause for 12 seconds (apparently NYT titrates API calls)
             time.sleep(12)
-
+        
         self.df = pd.DataFrame(self.books)
+        """
+        self.df = pd.read_csv('test_data.csv')
 
     def compute_analysis(self) -> Any:
-        '''Provides and average for weeks on NYT Best Sellers list, by rank.
+        '''Compute the average weeks on the New York Times Best Sellers list by rank.
 
-This function uses group by from the pandas library to compute mean 'weeks on list' by the rank of the book on the list and returns the result as a matrix.
+        This function utilizes the groupby functionality from the pandas library to calculate 
+        the mean 'weeks on list' for each rank of the book on the New York Times Best Sellers list.
+        This checks for endogeneity of rank and weeks on the list (e.g., do higher ranked books stay on
+        the list for longer?).
 
-Parameters
-----------
-None
+        Parameters
+        ----------
+        None
 
-Returns
--------
-analysis_output : Any
+        Returns
+        -------
+        analysis_output : Any
+            A pandas Series containing the mean weeks on the list for each rank.
+        '''
 
-'''
-        # Calculate something       
-
-        pass
+        # calculate something       
+        mean_weeks_on_list = self.df.groupby('rank')['weeks_on_list'].mean()
+        return mean_weeks_on_list
 
     def plot_data(self, save_path: Optional[str] = None) -> plt.Figure:
         ''' Analyze and plot data
 
-Generates a plot, display it to screen, and save it to the path in the parameter `save_path`, or 
-the path from the configuration file if not specified.
+        Generates a plot, display it to screen, and save it to the path in the parameter `save_path`, or 
+        the path from the configuration file if not specified.
 
-Parameters
-----------
-save_path : str, optional
-    Save path for the generated figure
+        Parameters
+        ----------
+        save_path : str, optional
+            Save path for the generated figure
 
-Returns
--------
-fig : matplotlib.Figure
+        Returns
+        -------
+        fig : matplotlib.Figure
 
-'''
-        # Add plot code here
+        '''
 
-        fig = plt.figure()
-        if save_path:
-            plt.savefig(f'{save_path}fig.png')
-        else:
-            plt.savefig('figures/fig.png')
-        return fig
 
     def notify_done(self, message: str) -> None:
         ''' Notify the user that analysis is complete.
