@@ -62,7 +62,7 @@ class Analysis():
         with open('configs/system_config.yml', 'r') as f:
             system_config = yaml.safe_load(f)
 
-        """
+        
         # Access NYT API key from the system configuration
         key = system_config.get('nyt_key')
 
@@ -102,6 +102,7 @@ class Analysis():
         self.df = pd.DataFrame(self.books)
         """
         self.df = pd.read_csv('test_data.csv')
+        """
 
     def compute_analysis(self) -> Any:
         '''Compute the average weeks on the New York Times Best Sellers list by rank.

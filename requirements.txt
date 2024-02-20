@@ -1,0 +1,7 @@
+typing
+matplotlib.pyplot
+yaml
+requests
+pandas
+datetime
+time
