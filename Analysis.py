@@ -4,7 +4,6 @@ import yaml
 import requests
 import pandas as pd
 import datetime as dt
-import time
 
 class Analysis():
 
@@ -62,7 +61,8 @@ class Analysis():
         with open('configs/system_config.yml', 'r') as f:
             system_config = yaml.safe_load(f)
 
-        
+        """
+       
         # Access NYT API key from the system configuration
         key = system_config.get('nyt_key')
 
@@ -102,7 +102,6 @@ class Analysis():
         self.df = pd.DataFrame(self.books)
         """
         self.df = pd.read_csv('test_data.csv')
-        """
 
     def compute_analysis(self) -> Any:
         '''Compute the average weeks on the New York Times Best Sellers list by rank.
@@ -144,30 +143,45 @@ class Analysis():
         '''
         mean_weeks_on_list = self.compute_analysis()
 
-        # Plot configuration
+        # Plot configurations
         color = self.config['plot_config']['color']
         title = self.config['plot_config']['title']
         xtitle = self.config['plot_config']['xtitle']
         ytitle = self.config['plot_config']['ytitle']
         fig_size = self.config['plot_config']['fig_size']
 
-        # Plot
-        fig = plt.figure(figsize=fig_size)
+        # Bar Plot
+        fig1 = plt.figure(figsize=fig_size)
         plt.bar(mean_weeks_on_list.index, mean_weeks_on_list.values, color=color)
         plt.title(title)
         plt.xlabel(xtitle)
         plt.ylabel(ytitle)
-        plt.xticks(mean_weeks_on_list.index)  # Axis labels for each category
-        plt.grid(False)  # No grid lines
+        plt.xticks(mean_weeks_on_list.index)
+        plt.grid(False)
 
         if save_path:
-            plt.savefig(f'{save_path}fig.png')
+            plt.savefig(f'{save_path}fig1.png')
         else:
-            plt.savefig('figures/fig.png')
+            plt.savefig('figures/fig1.png')
 
         plt.show()
 
-        return fig
+        # Scatter plot
+        fig2 = plt.figure(figsize=fig_size)
+        plt.scatter(self.df['rank'], self.df['weeks_on_list'], color=color, alpha=0.5)
+        plt.title('Scatter Plot of Weeks on List vs Rank')
+        plt.xlabel(xtitle)
+        plt.ylabel(ytitle)
+        plt.grid(True)
+
+        if save_path:
+            plt.savefig(f'{save_path}fig2.png')
+        else:
+            plt.savefig('figures/fig2.png')
+
+        plt.show()
+
+        return fig1, fig2
 
     def notify_done(self) -> None:
         ''' Notify the user that analysis is complete.
@@ -185,5 +199,6 @@ class Analysis():
         '''
         datetime = dt.datetime.now()
         requests.post(self.config['ntfy_topic'],
-            data=f'**NYT Book API Assignment** 🔥 \nAnalysis completed at {datetime}. Check results and figure!'.encode(encoding='utf-8'))
+            data = f'✅ Analysis completed at {datetime}. Check results and figure!'.encode(encoding='utf-8'),
+            headers = {'Title': 'NYT Book API Assignment'})
     
