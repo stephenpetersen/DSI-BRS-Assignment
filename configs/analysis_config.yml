@@ -6,5 +6,5 @@ plot_config:
   color: lightseagreen
   title: "Average Weeks on Bestseller List by Rank \n Most Recent 8 Lists (2 months)"
   xtitle: "Rank"
-  ytitle: "Average Weeks on Bestseller List"
+  ytitle: "Weeks on Bestseller List"
   fig_size: [10, 6]
