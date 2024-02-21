@@ -11,6 +11,10 @@ This Python program performs analysis on data obtained from the New York Times (
 2. Install the required dependencies:
     ```bash
     pip install -r requirements.txt
+   ```
+3. Install directly from GitHub:
+    ```bash
+    pip install git+https://github.com/stephenpetersen/DSI-BRS-Assignment
     ```
    
 ## Usage
