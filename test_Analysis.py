@@ -3,7 +3,7 @@ import pandas as pd
 from pytest import raises
 from Analysis import Analysis
 
-analysis = Analysis('configs/analysis_config.yml')
+analysis = Analysis('config.yml')
 
 def test_check_data_frame() :
     analysis.load_data()
