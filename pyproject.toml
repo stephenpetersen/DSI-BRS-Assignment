@@ -3,13 +3,13 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "brs_package"
+name = "brs_package_nyt_bestsellers"
 authors = [
     {name = "Stephen Petersen", email = "petersen.stephen@me.com"},
 ]
 description = ""
 version = "0.1.0"
-dependencies = ["requests", "yaml", "matplotlib.pyplot"]
+dependencies = ["matplotlib","pyyaml","requests","pandas"]
 requires-python = ">=3.11.0"
 readme = "README.md"
 classifiers = [
