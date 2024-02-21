@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 packages = ["Analysis.py", "configs/", "test_Analysis.py"]
 
 [project]
-name = "brs_package_nyt_bestsellers"
+name = "nyt_bestsellers"
 authors = [
     {name = "Stephen Petersen", email = "petersen.stephen@me.com"},
 ]
