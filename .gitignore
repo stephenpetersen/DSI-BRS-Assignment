@@ -3,4 +3,5 @@ user_config.yml
 Assignment.md
 test_data.csv
 __pycache__/
+.pytest_cache
 error.log
