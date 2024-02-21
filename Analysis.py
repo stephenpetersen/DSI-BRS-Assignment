@@ -121,7 +121,7 @@ class Analysis():
             A pandas Series containing the mean weeks on the list for each rank.
         '''
 
-        # calculate something       
+        # compute average weeks on list by rank       
         mean_weeks_on_list = self.df.groupby('rank')['weeks_on_list'].mean()
         return mean_weeks_on_list
 
