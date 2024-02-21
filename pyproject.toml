@@ -13,7 +13,7 @@ authors = [
 description = "Analyses data from the NYT Bestsellers API and produces a plot"
 version = "0.1.0"
 dependencies = ["matplotlib","pyyaml","requests","pandas"]
-requires-python = ">=3.11.0"
+requires-python = ">=3.10.12" 
 readme = "README.md"
 classifiers = [
     "License :: OSI Approved :: MIT License",
