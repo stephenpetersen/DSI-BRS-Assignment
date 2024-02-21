@@ -29,10 +29,10 @@ class Analysis():
             Analysis object containing consolidated parameters from the configuration files
 
         '''
-        CONFIG_PATHS = ['configs/system_config.yml', 'configs/user_config.yml', 'configs/analysis_config.yml']
+        CONFIG_PATHS = ['configs/system_config.yml', 'configs/user_config.yml']
 
         # add the analysis config to the list of paths to load
-        paths = CONFIG_PATHS
+        paths = CONFIG_PATHS + ['configs/analysis_config.yml']
 
         # initialize empty dictionary to hold the configuration
         config = {}
