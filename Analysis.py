@@ -166,7 +166,7 @@ class Analysis():
 
         plt.show()
 
-        # Scatter plot
+        # Scatter plot (added from issue #3)
         fig2 = plt.figure(figsize=fig_size)
         plt.scatter(self.df['rank'], self.df['weeks_on_list'], color=color, alpha=0.5)
         plt.title('Scatter Plot of Weeks on List vs Rank')
