@@ -10,7 +10,7 @@ import logging
 # configure logging
 logging.basicConfig(level=logging.ERROR, filename='error.log')
 
-class Analysis():
+class nyt_bestsellers():
 
     def __init__(self, analysis_config: str) -> None:
         ''' Load config into an Analysis object

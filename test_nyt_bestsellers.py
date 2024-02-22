@@ -1,9 +1,9 @@
 # test that load_data() pull in a dataframe of correct size (8 lists of 15 books)
 import pandas as pd
 from pytest import raises
-from Analysis import Analysis
+from nyt_bestsellers import nyt_bestsellers
 
-analysis = Analysis('config.yml')
+analysis = nyt_bestsellers('config.yml')
 
 def test_check_data_frame() :
     analysis.load_data()
