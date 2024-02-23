@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
-include = ["nyt_bestsellers.py"]
+include = ["nyt_bestsellers.py","configs/"]
 
 [project]
 name = "nyt_bestsellers"
