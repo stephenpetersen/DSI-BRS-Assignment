@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.ERROR, filename='error.log')
 
 class nyt_bestsellers():
 
-    def __init__(self, analysis_config: str) -> None:
+    def __init__(self, analysis_config: str = 'configs/analysis_config.yml') -> None:
         ''' Load config into an Analysis object
 
         Load system-wide configuration from `configs/system_config.yml`, user configuration from
@@ -32,7 +32,7 @@ class nyt_bestsellers():
         CONFIG_PATHS = ['configs/system_config.yml', 'configs/user_config.yml']
 
         # add the analysis config to the list of paths to load
-        paths = CONFIG_PATHS + ['configs/analysis_config.yml']
+        paths = CONFIG_PATHS + [analysis_config]
 
         # initialize empty dictionary to hold the configuration
         config = {}
